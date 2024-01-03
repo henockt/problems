@@ -1,20 +1,23 @@
 class Solution:
     def findMatrix(self, nums: List[int]) -> List[List[int]]:        
         valToOcc = {}
-        max = 1
+        out = [[]]
+        rows = 1
 
         for val in nums:
             if valToOcc.get(val):
                 valToOcc[val] += 1
-                if valToOcc[val] > max:
-                    max = valToOcc[val]
+                occ = valToOcc[val]
+                if occ > rows:
+                    out.append([])
+                    rows += 1
+                
+                out[occ - 1].append(val)
             else:
                 valToOcc[val] = 1
-
-        output = [[] for i in range(max)]
-
-        for key, value in valToOcc.items():
-            for i in range(value):
-                output[i].append(key)
+                out[0].append(val)
         
-        return output
+        return out
+
+        
+
