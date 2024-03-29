@@ -14,6 +14,7 @@ typedef unsigned int uint;
 #define MP make_pair
 #define NL cout << '\n'
 #define AL '\n'
+#define all(x) (x).begin(), (x).end()
 
 template<typename T> ostream& operator<<(ostream& stream, vector<T>& v) {
 	for (const auto& x : v) stream << x << " ";
@@ -37,9 +38,16 @@ void search() {
 
 	for (uint i = 0; i < n; ++i) {
         if (chosen[i]) continue;
+
+        // avoid repetition
+        // if curr char is similar with prev, and prev is chosen, stop this search
+        if (i > 0 && s.at(i) == s.at(i - 1) && chosen[i - 1]) return;
+
         chosen[i] = true; 
         permutation.PB(s.at(i));
+        
         search();
+
         chosen[i] = false;
         permutation.pop_back();
 	}
@@ -48,13 +56,11 @@ void search() {
 void solve() {
 	cin >> s;
 	n = s.length();
-	perms.reserve((1 << n));
 	chosen.resize(n);
 
-	search();
+	sort(all(s));
 
-	sort(perms.begin(), perms.end());
-	perms.resize(unique(perms.begin(), perms.end()) - perms.begin());
+	search();
 
 	cout << perms.size() << AL;
 	for (const auto& x : perms) {
