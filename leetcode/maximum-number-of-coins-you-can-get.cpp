@@ -4,12 +4,10 @@ public:
         sort(piles.rbegin(), piles.rend());
         int size = piles.size();
         int times = size / 3;
-        
         int max = 0;
-        // select every 2th element
-        for (int i = 0, j = 1; i < times; i++) {
+        // select every 2nd element
+        for (int i = 0, j = 1; i < times; ++i, j += 2) {
             max += piles[j];
-            j += 2;
         }
         return max;
     }
