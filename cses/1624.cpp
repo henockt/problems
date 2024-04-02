@@ -68,13 +68,13 @@ bool check(int row, int col) {
 	return true;
 }
 
-void search(int k) { // k - (k)column
+void search(int k) { // k - row
 	if (k == n) {
 		cnt++;
 		return;
 	}
 
-	for (int i = 0; i < n; ++i) {
+	for (int i = 0; i < n; ++i) { // i - column
 		if (check(k, i)) { // backtrack if check returns false
 			BOARD.at(k).at(i) = 'Q'; // choose (a new col)
 			search(k + 1); // recurse (a new row)
