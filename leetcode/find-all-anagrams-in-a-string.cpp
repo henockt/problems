@@ -1,24 +1,19 @@
 class Solution {
 public:
     vector<int> findAnagrams(string s, string p) {
-        vector<int> out;
-        out.reserve(s.size());
+        unordered_map<char, int> target;
+        for (const auto& c : p) { target[c]++; }
 
-        unordered_map<char, int> curr, targ;
-        for (const auto& c : p) { targ[c]++; }
+        int k = p.length(); // fixed window
+        unordered_map<char, int> curr;
+        vector<int> out; out.reserve(s.length());
+        for (int i = 0; i < k; ++i) { curr[s[i]]++; }
+        if (curr == target) out.push_back(0);
 
-        int l = 0;
-        for (int r = 0; r < s.size(); ++r) {
-            curr[s.at(r)]++;
-
-            while (l < r && curr[s.at(l)] > targ[s.at(l)]) { // retract
-                curr[s.at(l)]--;
-                l++;
-            }
-
-            if (curr == targ) {
-                out.emplace_back(l);
-            }
+        for (int r = k; r < (int) s.length(); ++r) {
+            curr[s[r]]++, curr[s[r - k]]--;
+            if (curr[s[r - k]] == 0) curr.erase(s[r - k]);
+            if (curr == target) out.push_back(r - k + 1);
         }
 
         out.resize(out.size());
