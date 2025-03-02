@@ -1,0 +1,32 @@
+# Problem: Sort an Array - https://leetcode.com/problems/sort-an-array/description/
+
+class Solution {
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        vector<int> aux(nums.size());
+        auto merge = [&](vector<int>& v, int lo, int mid, int hi) {
+            int i = lo, j = mid, N = hi - lo;
+            for (int k = 0; k < N; ++k) {
+                if (j == hi || (i < mid && v[i] <= v[j])) {
+                    aux[k] = v[i++];
+                } else {
+                    aux[k] = v[j++];
+                }
+            }
+            for (int k = lo, i = 0; k < hi; ++k) {
+                v[k] = aux[i++]; 
+            }
+        };
+        function<void (vector<int>&, int, int)> sort;
+        sort = [&](vector<int>& arr, int lo, int hi) {
+            int N = hi - lo;
+            if (N <= 1) return;
+            int mid = lo + N/2;
+            sort(arr, lo, mid);
+            sort(arr, mid, hi);
+            merge(arr, lo, mid, hi);
+        };
+        sort(nums, 0, nums.size());
+        return nums;
+    }
+};
