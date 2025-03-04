@@ -1,0 +1,16 @@
+# Problem: Two City Scheduling - https://leetcode.com/problems/two-city-scheduling/
+
+class Solution {
+public:
+    int twoCitySchedCost(vector<vector<int>>& costs) {
+        ios::sync_with_stdio(0);
+        cin.tie(0);
+        sort(begin(costs), end(costs), [](const auto& p, const auto& q) {
+            return (p[0] - p[1]) < (q[0] - q[1]);
+        });
+        int res = 0, n = costs.size();
+        for (int i = 0; i < n/2; ++i) res += costs[i][0];
+        for (int i = n/2; i < n; ++i) res += costs[i][1];
+        return res;
+    }
+};
