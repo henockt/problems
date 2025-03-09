@@ -1,0 +1,13 @@
+# Problem: Crawler Log Folder - https://leetcode.com/problems/crawler-log-folder/
+
+class Solution {
+public:
+    int minOperations(vector<string>& logs) {
+        int s = 0;
+        for (const auto& log : logs) {
+            if (log == "../" && s > 0) { s--; }
+            else if (log != "./" && log != "../") { s++; }
+        }
+        return s;
+    }
+};
