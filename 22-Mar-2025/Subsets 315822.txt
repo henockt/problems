@@ -1,0 +1,30 @@
+# Problem: Subsets - https://leetcode.com/problems/subsets/
+
+class Solution {
+private:
+    vector<vector<int>> subs;
+    vector<int> curr, nums;
+    int n;
+
+    void search(int k) {
+        if (k == n) {
+            subs.push_back(curr);
+            return;
+        }
+
+        curr.push_back(nums.at(k));
+        search(k + 1);
+        curr.pop_back();
+        search(k + 1);
+    }
+
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        this->n = (int) nums.size();
+        this->nums = nums;
+
+        search(0);      
+
+        return subs;
+    }
+};
