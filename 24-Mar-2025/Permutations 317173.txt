@@ -1,0 +1,31 @@
+# Problem: Permutations - https://leetcode.com/problems/permutations/
+
+class Solution {
+public:
+    vector<int> currPerm, list;
+    vector<bool> chosen;
+    vector<vector<int>> perms;
+
+    void findPermutations(int k) {
+        if (k == 0) {
+            perms.emplace_back(currPerm);
+            return;
+        }
+
+        for (int i = 0; i < (int) list.size(); ++i) {
+            if (chosen[i]) continue;
+            currPerm.push_back(list.at(i));
+            chosen[i] = true;
+            findPermutations(k - 1);
+            currPerm.pop_back();
+            chosen[i] = false;
+        }
+    }
+
+    vector<vector<int>> permute(vector<int>& nums) {
+        list = nums;
+        chosen.resize((int) nums.size());
+        findPermutations((int) nums.size());
+        return perms;      
+    }
+};
