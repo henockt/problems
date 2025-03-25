@@ -1,0 +1,14 @@
+# Problem: Binary Search - https://leetcode.com/problems/binary-search/description/
+
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        int l = -1, r = (int) nums.size(); // nums[l] < t, nums[r] >= t
+        while (l + 1 < r) {
+            int m = (l + r) / 2;
+            nums[m] < target ? l = m : r = m;
+        }
+
+        return ((r == (int) nums.size() || nums[r] != target) ? -1 : r); 
+    }
+};
