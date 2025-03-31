@@ -1,0 +1,20 @@
+# Problem: Heaters - https://leetcode.com/problems/heaters/
+
+class Solution {
+public:
+    int findRadius(vector<int>& houses, vector<int>& heaters) {
+        sort(begin(heaters), end(heaters));
+        int n = houses.size();
+        int res = 0;
+        for (int i = 0; i < n; ++i) {
+            auto t = upper_bound(begin(heaters), end(heaters), houses[i]);
+            int curr = INT_MAX;
+            if (t == end(heaters)) --t;
+            curr = min(curr, abs((*t) - houses[i]));
+            if (t != begin(heaters)) --t;
+            curr = min(curr, abs((*t) - houses[i]));
+            res = max(curr, res);
+        }
+        return res;
+    }
+};
